@@ -1,0 +1,1 @@
+docker build --tag jflam/containerized_notebook .  
