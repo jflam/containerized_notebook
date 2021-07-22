@@ -1,17 +1,9 @@
 FROM jupyter/minimal-notebook
 
 # Set arguments
-ARG CONTAINER_USER=minsa110
+ARG CONTAINER_USER=jovyan
 ARG GIT_URI=https://github.com/jflam/containerized_notebook
 ARG REPO_DIR=repo
-
-# Configure sudo
-USER root
-RUN \
-    echo "*** configure sudo ***" && \
-    adduser ${CONTAINER_USER} && \
-    adduser ${CONTAINER_USER} sudo && \
-    echo '%sudo ALL=(ALL) NOPASSWD:ALL' >> /etc/sudoers
 
 # Clone repo
 USER ${CONTAINER_USER}
@@ -22,7 +14,7 @@ RUN \
 # Install libraries
 RUN \
     echo "*** install libraries ***" && \
-    pip3 install -r requirements.txt
+    pip3 install -r "/home/${CONTAINER_USER}/${REPO_DIR}/requirements.txt"
 
 # Copy all files
 COPY . /
